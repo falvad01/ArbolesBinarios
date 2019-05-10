@@ -1,5 +1,6 @@
 package ule.edi.tree;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -96,9 +97,6 @@ public class BinarySearchTreeADTImpl<T extends Comparable<? super T>> extends Ab
 	 * @param elements valores a insertar.
 	 */
 	public void insert(Collection<T> elements) {
-		System.out.println("Comenzamos");
-		// O todos o ninguno; si alguno es 'null', ni siquiera se comienza a insertar
-		// TODO Implementar el método
 
 		Iterator<T> it = elements.iterator();
 		boolean comenzar = true;
@@ -109,8 +107,14 @@ public class BinarySearchTreeADTImpl<T extends Comparable<? super T>> extends Ab
 		}
 
 		if (comenzar) {
-			System.out.println("Comenzamos");
-			// insertarColeccion(elements.iterator());
+
+			it = elements.iterator();
+
+			ArrayList<Integer> list = new ArrayList<Integer>();
+
+			while (it.hasNext()) { // Comprobamos que ningun elemento sea null
+				insert(it.next());
+			}
 
 		}
 
@@ -124,10 +128,9 @@ public class BinarySearchTreeADTImpl<T extends Comparable<? super T>> extends Ab
 	 * @param elements elementos a insertar.
 	 */
 	public void insert(T... elements) {
-		// O todos o ninguno; si alguno es 'null', ni siquiera se comienza a insertar
-		// TODO Implementar el método
+
 		boolean comenzar = true;
-		for (T elem : elements) {
+		for (T elem : elements) { // Si encontramos un null no se ejecutara el algoritmo
 
 			if (elem == null) {
 				comenzar = false;
@@ -136,24 +139,11 @@ public class BinarySearchTreeADTImpl<T extends Comparable<? super T>> extends Ab
 
 		if (comenzar) {
 
-//			for (T elem : elements) {
-//
-//				insert(elem);
-//			}
+			for (T elem : elements) {
 
-			for (int i = 0; i < elements.length; i++) {
+				insert(elem); 
 
-				if (i == 0) {
-					this.content = elements[i];
-					this.leftSubtree = emptyBST();
-					this.rightSubtree = emptyBST();
-				} else {
-					System.out.println("-------------------------------");
-					insert(elements[i]);
-				}
 			}
-
-			this.render();
 
 		}
 
@@ -169,57 +159,47 @@ public class BinarySearchTreeADTImpl<T extends Comparable<? super T>> extends Ab
 	 * @param element valor a insertar.
 	 */
 	public void insert(T element) {
-		// No se admiten null
+
+		BinarySearchTreeADTImpl<T> arbol = emptyBST();
+
 		if (element == null) {
 			throw new IllegalArgumentException("No se aceptan elementos nulos");
 		}
 
-		System.out.println("Elemento: " + element + " this.hoja: " + this.content);
-		if (element.compareTo(this.content) == 1) { // content
-			System.out.println("Derecha");
-			System.out.println(this.getRightBST().content);
-			
-			if (this.getRightBST().content == null) {
+		if (this.getContent() == null) { // caso para la primera raiz
+			// System.out.println("Primera raiz");
+			this.content = element; // Primera raiz
+			this.leftSubtree = emptyBST(); // creamos los arboles laterales vacios
+			this.rightSubtree = emptyBST();
+		}
 
-				BinarySearchTreeADTImpl<T> arbol = emptyBST();
+		// System.out.println("Elemento: " + element + " this.hoja: " + this.content);
+		if (element.compareTo(this.content) == 1) { // Cuando el content es mayor que la raiz se va a la derecha
+
+			if (this.getRightBST().content == null) { // si encontramo el arbol vacio se introduce
 
 				arbol.content = element;
 				arbol.leftSubtree = emptyBST();
 				arbol.rightSubtree = emptyBST();
 
-				System.out.println("Contenido arbol: " + arbol.getContent());
-				
-				setRightBST(arbol); // Introduzco el arbol con la raiz ya establecida
-				setLeftBST(emptyBST()); // Creo el arbol contrario para que no sea null
+				this.setRightBST(arbol); // Introduzco el arbol con la raiz ya establecida
 
-			} else {
+			} else { // si no se sigue buscando un hueco
 				this.getRightBST().insert(element);
 			}
 
-		} else if (element.compareTo(this.content) == -1) {
-			
-			System.out.println("Izquierda");
-			System.out.println(this.getLeftBST().content);
-			
-			
-			if (this.getLeftBST().content == null) {
-				
-				
-				BinarySearchTreeADTImpl<T> arbol2 = new BinarySearchTreeADTImpl<>();
+		} else if (element.compareTo(this.content) == -1) { // Cuando el content es menor que la raiz se va a la
+															// izquierda
 
-				arbol2.setContent(element);
-				arbol2.setLeftBST(emptyBST());
-				arbol2.setRightBST(emptyBST());
-				System.out.println("Contenido arbol 2: " + arbol2.getContent());
-				System.out.println("************");
-				arbol2.toString();
-				System.out.println("************");
+			if (this.getLeftBST().content == null) { // si encontramo el arbol vacio se introduce
 
-				this.setLeftBST(arbol2);// Introduzco el arbol con la raiz ya establecida
-				System.out.println("Introducido arbol 2");
-				this.setRightBST(emptyBST()); // Creo el arbol contrario para que no sea null
+				arbol.setContent(element);
+				arbol.setLeftBST(emptyBST());
+				arbol.setRightBST(emptyBST());
 
-			} else {
+				this.setLeftBST(arbol);// Introduzco el arbol con la raiz ya establecida
+
+			} else { // si no se sigue buscando un hueco
 				this.getLeftBST().insert(element);
 			}
 		}
