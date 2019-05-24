@@ -96,26 +96,26 @@ public class BinarySearchTreeADTTests {
 	@Before
 	public void setupBSTs() {
 		
-//		TE = new BinarySearchTreeADTImpl<Integer>();
-//		
-//		T1234 = new BinarySearchTreeADTImpl<Integer>();
-//		T1234.insert(1,2,3,4);
-//		Assert.assertEquals(T1234.toString(), "{1, ∅, {2, ∅, {3, ∅, {4, ∅, ∅}}}}");
-//		
-//		T4321 = new BinarySearchTreeADTImpl<Integer>();
-//		T4321.insert(4, 3, 2, 1);
-//		Assert.assertEquals(T4321.toString(), "{4, {3, {2, {1, ∅, ∅}, ∅}, ∅}, ∅}");
+		TE = new BinarySearchTreeADTImpl<Integer>();
+		
+		T1234 = new BinarySearchTreeADTImpl<Integer>();
+		T1234.insert(1,2,3,4);
+		Assert.assertEquals(T1234.toString(), "{1, ∅, {2, ∅, {3, ∅, {4, ∅, ∅}}}}");
+		
+		T4321 = new BinarySearchTreeADTImpl<Integer>();
+		T4321.insert(4, 3, 2, 1);
+		Assert.assertEquals(T4321.toString(), "{4, {3, {2, {1, ∅, ∅}, ∅}, ∅}, ∅}");
 		
 		
 		
-//		TEx = new BinarySearchTreeADTImpl<Integer>();
-//		TEx.insert(10, 20, 30, 5);
-//		Assert.assertEquals(TEx.toString(), "{10, {5, ∅, ∅}, {20, ∅, {30, ∅, ∅}}}");
-//		
-//		TV1 = new BinarySearchTreeADTImpl<Integer>();
-//		TV1.insert(10, 5, 7, 6, 15);		
-//		Assert.assertEquals(TV1.toString(), "{10, {5, ∅, {7, {6, ∅, ∅}, ∅}}, {15, ∅, ∅}}");
-//		
+		TEx = new BinarySearchTreeADTImpl<Integer>();
+		TEx.insert(10, 20, 30, 5);
+		Assert.assertEquals(TEx.toString(), "{10, {5, ∅, ∅}, {20, ∅, {30, ∅, ∅}}}");
+		
+		TV1 = new BinarySearchTreeADTImpl<Integer>();
+		TV1.insert(10, 5, 7, 6, 15);		
+		Assert.assertEquals(TV1.toString(), "{10, {5, ∅, {7, {6, ∅, ∅}, ∅}}, {15, ∅, ∅}}");
+		
 		
 	}
 
@@ -137,6 +137,15 @@ public class BinarySearchTreeADTTests {
 //			TC3.filterTags("descend");
 //			Assert.assertEquals("{50 [(descend, 4)], {20 [(descend, 6)], {10 [(descend, 7)], ∅, ∅}, {30 [(descend, 5)], ∅, ∅}}, {80 [(descend, 2)], {70 [(descend, 3)], ∅, ∅}, {90 [(descend, 1)], ∅, ∅}}}", TC3.toString());
 //			
+		}
+		
+		
+		@Test
+		public void testWithdraw() {
+			
+			
+			
+			
 		}
 	
 	}
