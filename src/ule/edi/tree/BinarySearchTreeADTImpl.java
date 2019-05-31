@@ -211,7 +211,11 @@ public class BinarySearchTreeADTImpl<T extends Comparable<? super T>> extends Ab
 	 */
 	public void withdraw(Collection<T> elements) {
 		// O todos o ninguno; si alguno es 'null', no se eliminará ningún elemento
-		// TODO Implementar el método
+		
+		Iterator<T> it = elements.iterator();
+		while(it.hasNext()) {
+			
+		}
 	}
 
 	/**
