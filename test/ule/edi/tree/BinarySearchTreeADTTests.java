@@ -70,20 +70,20 @@ public class BinarySearchTreeADTTests {
 		TV1.insert(10, 5, 7, 6, 15);
 		Assert.assertEquals(TV1.toString(), "{10, {5, ∅, {7, {6, ∅, ∅}, ∅}}, {15, ∅, ∅}}");
 
-	} 
-	
+	}
+
 	@Test
 	public void testInsertElementsNulo() {
-		
+
 		T1234 = new BinarySearchTreeADTImpl<Integer>();
 		T1234.insert(1, 2, null, 4);
 		Assert.assertEquals(T1234.toString(), "∅");
 	}
-	
+
 	@Test(expected = IllegalArgumentException.class)
 	public void testInsertElementException() {
-		
-		TE.insert((Integer)null);
+
+		TE.insert((Integer) null);
 	}
 
 	@Test
@@ -102,89 +102,162 @@ public class BinarySearchTreeADTTests {
 				TC3.toString());
 
 	}
-	
+
 	@Test
 	public void testInsertCollection() {
-		
-		Collection <Integer>coll = new ArrayList<Integer>();
+
+		Collection<Integer> coll = new ArrayList<Integer>();
 		coll.add(1);
 		coll.add(2);
 		coll.add(3);
 		coll.add(4);
-		
+
 		TE.insert(coll);
 		assertEquals(TE.toString(), "{1, ∅, {2, ∅, {3, ∅, {4, ∅, ∅}}}}");
-		
+
 		coll = new ArrayList<Integer>();
 		TE = new BinarySearchTreeADTImpl<Integer>();
-		
+
 		coll.add(10);
 		coll.add(5);
 		coll.add(7);
 		coll.add(6);
 		coll.add(15);
-			
+
 		TE.insert(coll);
 		assertEquals(TE.toString(), "{10, {5, ∅, {7, {6, ∅, ∅}, ∅}}, {15, ∅, ∅}}");
-	
-		
+
 	}
-	
+
 	@Test
 	public void testInsertCollectionNulo() {
-		
-		Collection <Integer>coll = new ArrayList<Integer>();
+
+		Collection<Integer> coll = new ArrayList<Integer>();
 		coll.add(1);
 		coll.add(null);
 		coll.add(3);
 		coll.add(4);
-		
+
 		TE.insert(coll);
 		assertEquals(TE.toString(), "∅");
-		
+
 	}
-	
+
 	@Test
 	public void testWithdrowElem() {
-		
-		
+
 		TEx = new BinarySearchTreeADTImpl<Integer>();
 		TEx.insert(10, 20, 30, 5);
 		Assert.assertEquals(TEx.toString(), "{10, {5, ∅, ∅}, {20, ∅, {30, ∅, ∅}}}");
 		TEx.withdraw(30);
 		Assert.assertEquals(TEx.toString(), "{10, {5, ∅, ∅}, {20, ∅, ∅}}");
 
-		
-		
 		TV1 = new BinarySearchTreeADTImpl<Integer>();
 		TV1.insert(10, 5, 7, 6, 15);
 		Assert.assertEquals(TV1.toString(), "{10, {5, ∅, {7, {6, ∅, ∅}, ∅}}, {15, ∅, ∅}}");
 		TV1.withdraw(6);
 		Assert.assertEquals(TV1.toString(), "{10, {5, ∅, {7, ∅, ∅}}, {15, ∅, ∅}}");
-		
-		
+
 		TC3 = new BinarySearchTreeADTImpl<Integer>();
-		TC3.insert(50, 20, 80, 10, 30, 70,60);
+		TC3.insert(50, 20, 80, 10, 30, 70, 60);
 		Assert.assertEquals(TC3.toString(), "{50, {20, {10, ∅, ∅}, {30, ∅, ∅}}, {80, {70, {60, ∅, ∅}, ∅}, ∅}}");
 		TC3.withdraw(80);
 		Assert.assertEquals(TC3.toString(), "{50, {20, {10, ∅, ∅}, {30, ∅, ∅}}, {70, {60, ∅, ∅}, ∅}}");
-		
-		
+
 		TC3 = new BinarySearchTreeADTImpl<Integer>();
 		TC3.insert(50, 20, 70, 10, 30, 80, 90);
 		Assert.assertEquals(TC3.toString(), "{50, {20, {10, ∅, ∅}, {30, ∅, ∅}}, {70, ∅, {80, ∅, {90, ∅, ∅}}}}");
 		TC3.withdraw(70);
 		Assert.assertEquals(TC3.toString(), "{50, {20, {10, ∅, ∅}, {30, ∅, ∅}}, {80, ∅, {90, ∅, ∅}}}");
-		 
-		
+
 		TV1 = new BinarySearchTreeADTImpl<Integer>();
-		TV1.insert(10, 6, 7, 15,4, 5);
+		TV1.insert(10, 6, 7, 15, 4, 5);
 		Assert.assertEquals(TV1.toString(), "{10, {6, {4, ∅, {5, ∅, ∅}}, {7, ∅, ∅}}, {15, ∅, ∅}}");
 		TV1.withdraw(6);
 		Assert.assertEquals(TV1.toString(), "{10, {5, {4, ∅, ∅}, {7, ∅, ∅}}, {15, ∅, ∅}}");
-		
-		
-		
+
+		TV1 = new BinarySearchTreeADTImpl<Integer>();
+		TV1.insert(10, 6, 7, 15, 4, 5, 20, 12, 13);
+		Assert.assertEquals(TV1.toString(),
+				"{10, {6, {4, ∅, {5, ∅, ∅}}, {7, ∅, ∅}}, {15, {12, ∅, {13, ∅, ∅}}, {20, ∅, ∅}}}");
+		TV1.withdraw(15);
+		Assert.assertEquals(TV1.toString(), "{10, {6, {4, ∅, {5, ∅, ∅}}, {7, ∅, ∅}}, {13, {12, ∅, ∅}, {20, ∅, ∅}}}");
+
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testWithdrowNull() {
+		TV1 = new BinarySearchTreeADTImpl<Integer>();
+		TV1.insert(10, 6, 7, 15, 4, 5, 20, 12, 13);
+
+		TV1.withdraw((Integer) null);
+	}
+
+	@Test
+	public void testWithdrowArray() {
+
+		T1234 = new BinarySearchTreeADTImpl<Integer>();
+		T1234.insert(1, 2, 3, 4);
+		Assert.assertEquals(T1234.toString(), "{1, ∅, {2, ∅, {3, ∅, {4, ∅, ∅}}}}");
+		T1234.withdraw(1, 2, 3, 4);
+		Assert.assertEquals(T1234.toString(), "∅");
+
+	}
+
+	@Test
+	public void testWithdrowArrayNull() {
+
+		T1234 = new BinarySearchTreeADTImpl<Integer>();
+		T1234.insert(1, 2, 3, 4);
+		Assert.assertEquals(T1234.toString(), "{1, ∅, {2, ∅, {3, ∅, {4, ∅, ∅}}}}");
+		T1234.withdraw(1, 2, null, 4);
+
+	}
+
+	@Test
+	public void testWithdrowColl() {
+
+		Collection<Integer> coll = new ArrayList<Integer>();
+		coll.add(1);
+		coll.add(2);
+		coll.add(3);
+		coll.add(4);
+
+		TE.insert(coll);
+		assertEquals(TE.toString(), "{1, ∅, {2, ∅, {3, ∅, {4, ∅, ∅}}}}");
+		TE.withdraw(coll);
+		Assert.assertEquals(TE.toString(), "∅");
+
+	}
+
+	@Test
+	public void testWithdrowArrayColl() {
+
+		Collection<Integer> coll = new ArrayList<Integer>();
+		coll.add(1);
+		coll.add(2);
+		coll.add(3);
+		coll.add(4);
+
+		TE.insert(coll);
+		assertEquals(TE.toString(), "{1, ∅, {2, ∅, {3, ∅, {4, ∅, ∅}}}}");
+		Collection<Integer> coll2 = new ArrayList<Integer>();
+		coll2.add(1);
+		coll2.add(2);
+		coll2.add(null);
+		coll2.add(4);
+		TE.withdraw(coll2);
+
+	}
+
+	@Test
+	public void testgetSubtreeWithPath() {
+
+		TV1 = new BinarySearchTreeADTImpl<Integer>();
+		TV1.insert(10, 6, 7, 15, 4, 5, 20, 12, 13);
+		Assert.assertEquals(TV1.toString(),
+				"{10, {6, {4, ∅, {5, ∅, ∅}}, {7, ∅, ∅}}, {15, {12, ∅, {13, ∅, ∅}}, {20, ∅, ∅}}}");	
+		assertEquals("13",TV1.getSubtreeWithPath("101").content.toString());
 	}
 
 }

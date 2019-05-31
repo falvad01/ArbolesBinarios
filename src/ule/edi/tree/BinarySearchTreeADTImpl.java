@@ -209,19 +209,50 @@ public class BinarySearchTreeADTImpl<T extends Comparable<? super T>> extends Ab
 	 */
 	public void withdraw(Collection<T> elements) {
 		// O todos o ninguno; si alguno es 'null', no se eliminará ningún elemento
-		
+
 		Iterator<T> it = elements.iterator();
-		while(it.hasNext()) {
-			
+		boolean comenzar = true;
+		while (it.hasNext()) { // Comprobamos que ningun elemento sea null
+			if (it.next() == null) {
+				comenzar = false;
+			}
 		}
+
+		if (comenzar) {
+
+			it = elements.iterator();
+
+			ArrayList<Integer> list = new ArrayList<Integer>();
+
+			while (it.hasNext()) { // Comprobamos que ningun elemento sea null
+				withdraw(it.next());
+			}
+
+		}
+
 	}
 
 	/**
 	 * Elimina los valores en un array del árbol.
 	 */
 	public void withdraw(T... elements) {
-		// O todos o ninguno; si alguno es 'null', no se eliminará ningún elemento
-		// TODO Implementar el método
+		boolean comenzar = true;
+		for (T elem : elements) { // Si encontramos un null no se ejecutara el algoritmo
+
+			if (elem == null) {
+				comenzar = false;
+			}
+		}
+
+		if (comenzar) {
+
+			for (T elem : elements) {
+
+				withdraw(elem);
+
+			}
+
+		}
 	}
 
 	/**
@@ -233,10 +264,9 @@ public class BinarySearchTreeADTImpl<T extends Comparable<? super T>> extends Ab
 
 		// Si el elemento tiene dos hijos, se tomará el criterio de sustituir el
 		// elemento por el mayor de sus menores y eliminar el mayor de los menores.
-		// TODO Implementar el método
 
 		if (element == null) {
-			throw new IllegalArgumentException("No se aceptan elementos nulos"); 
+			throw new IllegalArgumentException("No se aceptan elementos nulos");
 		}
 
 		System.out.println("--------COMENZAMOS A COMPARAR DERECHA IZQUIERDA, EL CONTENT ACTUAL ES: " + this.content);
@@ -253,7 +283,7 @@ public class BinarySearchTreeADTImpl<T extends Comparable<? super T>> extends Ab
 				if ((this.leftSubtree.content != null) && (this.rightSubtree.content != null)) {// El arbol tiene dos
 																								// hijos
 					System.out.println("El arbol tiene dos hijos");
-					BinarySearchTreeADTImpl<T> aux = this.getLeftBST(); //El primero a la izquierda para ser el menores
+					BinarySearchTreeADTImpl<T> aux = this.getLeftBST(); // El primero a la izquierda para ser el menores
 
 					while (aux.getRightBST().content != null) {
 
@@ -261,7 +291,6 @@ public class BinarySearchTreeADTImpl<T extends Comparable<? super T>> extends Ab
 
 					}
 
-					
 					T delete = aux.content;
 					System.out.println("el delete es " + delete);
 					this.content = delete;
@@ -272,11 +301,10 @@ public class BinarySearchTreeADTImpl<T extends Comparable<? super T>> extends Ab
 					System.out.println("El arbol tiene un hijo");
 
 					if (this.leftSubtree.isEmpty()) { // Cuando el arbol izquierdo tiene no es null
-						
-						
+
 						System.out.println("Su hijo es el derecho");
 						this.content = this.getRightBST().content;
-						
+
 						if (this.getLeftBST().getLeftBST() != null) {
 							this.leftSubtree = this.getLeftBST().getLeftBST();
 						}
@@ -284,8 +312,7 @@ public class BinarySearchTreeADTImpl<T extends Comparable<? super T>> extends Ab
 						if (this.getRightBST().getRightBST() != null) {
 							this.rightSubtree = this.getRightBST().getRightBST();
 						}
-						
-						
+
 					} else {// Cuando el derecho no es null
 						System.out.println("Su hijo es el izquierdo");
 
@@ -319,7 +346,7 @@ public class BinarySearchTreeADTImpl<T extends Comparable<? super T>> extends Ab
 				getRightBST().withdraw(element);
 			}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		} else if (element.compareTo(this.content) == -1  || element.compareTo(this.content) == 0) { // izquierda
+		} else if (element.compareTo(this.content) == -1 || element.compareTo(this.content) == 0) { // izquierda
 
 			System.out.println("IZQUIERDA");
 			System.out.println("COMPARAMOS " + element + "con " + this.content);
@@ -424,9 +451,29 @@ public class BinarySearchTreeADTImpl<T extends Comparable<? super T>> extends Ab
 	 * @throws NoSuchElementException si el subarbol no existe
 	 */
 	public BinarySearchTreeADTImpl<T> getSubtreeWithPath(String path) {
-		// TODO implementar el método
 
-		return null;
+		char[] str = path.toCharArray();
+		BinarySearchTreeADTImpl<T> arbol = emptyBST();
+		arbol.content = this.content;
+		arbol.setLeftBST(this.getLeftBST());
+		arbol.setRightBST(this.getRightBST());
+		System.out.println(path);
+		
+		for (int i = 0; i < str.length; i++) {
+			
+			if (str[i] == '1') {// Derecha
+				System.out.println("Derecha");
+				arbol = arbol.getRightBST();
+
+			} else {// Izquierda
+				System.out.println("Izquierda");
+				arbol = arbol.getLeftBST();
+
+			}
+			System.out.println(arbol.content);
+		}
+
+		return arbol;
 
 	}
 
