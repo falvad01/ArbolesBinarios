@@ -143,5 +143,48 @@ public class BinarySearchTreeADTTests {
 		assertEquals(TE.toString(), "∅");
 		
 	}
+	
+	@Test
+	public void testWithdrowElem() {
+		
+		
+		TEx = new BinarySearchTreeADTImpl<Integer>();
+		TEx.insert(10, 20, 30, 5);
+		Assert.assertEquals(TEx.toString(), "{10, {5, ∅, ∅}, {20, ∅, {30, ∅, ∅}}}");
+		TEx.withdraw(30);
+		Assert.assertEquals(TEx.toString(), "{10, {5, ∅, ∅}, {20, ∅, ∅}}");
+
+		
+		
+		TV1 = new BinarySearchTreeADTImpl<Integer>();
+		TV1.insert(10, 5, 7, 6, 15);
+		Assert.assertEquals(TV1.toString(), "{10, {5, ∅, {7, {6, ∅, ∅}, ∅}}, {15, ∅, ∅}}");
+		TV1.withdraw(6);
+		Assert.assertEquals(TV1.toString(), "{10, {5, ∅, {7, ∅, ∅}}, {15, ∅, ∅}}");
+		
+		
+		TC3 = new BinarySearchTreeADTImpl<Integer>();
+		TC3.insert(50, 20, 80, 10, 30, 70,60);
+		Assert.assertEquals(TC3.toString(), "{50, {20, {10, ∅, ∅}, {30, ∅, ∅}}, {80, {70, {60, ∅, ∅}, ∅}, ∅}}");
+		TC3.withdraw(80);
+		Assert.assertEquals(TC3.toString(), "{50, {20, {10, ∅, ∅}, {30, ∅, ∅}}, {70, {60, ∅, ∅}, ∅}}");
+		
+		
+		TC3 = new BinarySearchTreeADTImpl<Integer>();
+		TC3.insert(50, 20, 70, 10, 30, 80, 90);
+		Assert.assertEquals(TC3.toString(), "{50, {20, {10, ∅, ∅}, {30, ∅, ∅}}, {70, ∅, {80, ∅, {90, ∅, ∅}}}}");
+		TC3.withdraw(70);
+		Assert.assertEquals(TC3.toString(), "{50, {20, {10, ∅, ∅}, {30, ∅, ∅}}, {80, ∅, {90, ∅, ∅}}}");
+		 
+		
+		TV1 = new BinarySearchTreeADTImpl<Integer>();
+		TV1.insert(10, 6, 7, 15,4, 5);
+		Assert.assertEquals(TV1.toString(), "{10, {6, {4, ∅, {5, ∅, ∅}}, {7, ∅, ∅}}, {15, ∅, ∅}}");
+		TV1.withdraw(6);
+		Assert.assertEquals(TV1.toString(), "{10, {5, {4, ∅, ∅}, {7, ∅, ∅}}, {15, ∅, ∅}}");
+		
+		
+		
+	}
 
 }
