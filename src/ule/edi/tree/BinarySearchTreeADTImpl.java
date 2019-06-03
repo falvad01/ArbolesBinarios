@@ -431,7 +431,25 @@ public class BinarySearchTreeADTImpl<T extends Comparable<? super T>> extends Ab
 	 */
 	public void parentChildPairsTagDescend(List<String> buffer) {
 
-		// TODO Implementar el método
+		if (this.getContent() != null) {
+
+			this.parentrecur(buffer, new int[1]);
+
+		}
+	}
+
+	private void parentrecur(List<String> buffer, int[] i) {
+		System.out.println(i[0]);
+		if (!this.isEmpty()) {
+
+			buffer.add(this.content.toString());
+
+			this.getRightBST().parentrecur(buffer, i);
+			i[0]++;
+			this.setTag("descend", i[0]);
+			this.getLeftBST().parentrecur(buffer, i);
+
+		}
 	}
 
 	/**
