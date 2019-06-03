@@ -353,77 +353,6 @@ public class BinarySearchTreeADTImpl<T extends Comparable<? super T>> extends Ab
 
 			if (element.compareTo(this.content) == 0) { // Llegamos al elemento
 
-				System.out.println("El elemto encontrado es " + this.content);
-				System.out.println("SU ARBOL DERECHO ES: " + this.getRightBST().content + "y su izquierdo es: "
-						+ this.getLeftBST().content);
-
-				if ((this.leftSubtree.content != null) && (this.rightSubtree.content != null)) {// El arbol tiene dos
-																								// hijos
-					System.out.println("El arbol tiene dos hijos");
-					BinarySearchTreeADTImpl<T> aux = this.getLeftBST();// Uno a la izquierda
-
-					while (aux.getRightBST().content != null) {
-
-						aux = aux.getRightBST(); // Nos movemos a la derecha
-
-					}
-
-					T delete = aux.content;
-					System.out.println("el delete es " + delete);
-					this.content = delete;
-					getLeftBST().withdraw(delete);
-
-				} else if ((this.leftSubtree.content != null) || (this.rightSubtree.content != null)) { // El arbol
-																										// tiene un hijo
-					System.out.println("El arbol tiene un hijo");
-
-					if (this.leftSubtree.isEmpty()) { // Cuando el arbol izquierdo tiene no es null
-						System.out.println("Su hijo es el derecho");
-						this.content = this.getLeftBST().content;
-						if (this.getLeftBST().getLeftBST() != null) {
-							this.leftSubtree = this.getLeftBST().getLeftBST();
-						}
-
-						if (this.getRightBST().getRightBST() != null) {
-							this.rightSubtree = this.getRightBST().getRightBST();
-						}
-						// this.getLeftBST().content = null;
-
-					} else {// Cuando el derecho no es null
-						System.out.println("Su hijo es el izquierdo");
-
-						this.content = this.getLeftBST().content;
-						System.out.println(this.content);
-						System.out.println(this.getLeftBST().toString());
-						System.out.println(this.getRightBST().toString());
-
-						if (this.getLeftBST().getLeftBST() != null) {
-							this.leftSubtree = this.getLeftBST().getLeftBST();
-						}
-
-						if (this.getRightBST().getRightBST() != null) {
-							this.rightSubtree = this.getRightBST().getRightBST();
-						}
-
-						System.out.println("-------");
-						System.out.println(this.getLeftBST().toString());
-						System.out.println(this.getRightBST().toString());
-						// this.setRightBST(emptyBST());
-					}
-
-				} else if ((this.leftSubtree.content == null) && (this.rightSubtree.content == null)) { // no tiene
-																										// hijos
-					System.out.println("El arbol no tiene hijos");
-					this.content = null;
-					this.setRightBST(null);
-					this.setLeftBST(null);
-					System.out.println("elemento eliminado");
-
-				} else if (this.content == null) { // Hemos llegado al final y el elemento no esta en el arbol
-					throw new IllegalArgumentException("Elemento no encontrado");
-
-				}
-
 			} else {
 				System.out.println("Bajamos al siguente elemento");
 				getLeftBST().withdraw(element);
@@ -458,9 +387,9 @@ public class BinarySearchTreeADTImpl<T extends Comparable<? super T>> extends Ab
 		arbol.setLeftBST(this.getLeftBST());
 		arbol.setRightBST(this.getRightBST());
 		System.out.println(path);
-		
+
 		for (int i = 0; i < str.length; i++) {
-			
+
 			if (str[i] == '1') {// Derecha
 				System.out.println("Derecha");
 				arbol = arbol.getRightBST();
@@ -533,8 +462,38 @@ public class BinarySearchTreeADTImpl<T extends Comparable<? super T>> extends Ab
 	 *         raiz, falso si no es así
 	 */
 	public boolean isPathIn(List<T> path) {
-		// TODO Implementar método
-		return false;
+
+		T primero = path.get(0);
+
+		if (primero == this.content) {
+
+			int count = 1;
+			this.setTag("path", 1);
+			BinarySearchTreeADTImpl<T> arbol = emptyBST();
+			arbol.content = this.content;
+			arbol.setLeftBST(this.getLeftBST());
+			arbol.setRightBST(this.getRightBST());
+			while (path.size() + 1 != count ) {
+
+				if (path.get(count) == arbol.getRightBST().content) {
+					arbol.setTag("path", count);
+					arbol = arbol.getRightBST();
+				} else if (path.get(count) == arbol.getLeftBST().content) {
+					arbol.setTag("path", count);
+					arbol = arbol.getLeftBST();
+				} else {
+					return false;
+
+				}
+
+				count++;
+			}
+
+		} else {
+			return false;
+		}
+
+		return true;
 	}
 
 	/**

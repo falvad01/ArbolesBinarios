@@ -256,8 +256,38 @@ public class BinarySearchTreeADTTests {
 		TV1 = new BinarySearchTreeADTImpl<Integer>();
 		TV1.insert(10, 6, 7, 15, 4, 5, 20, 12, 13);
 		Assert.assertEquals(TV1.toString(),
-				"{10, {6, {4, ∅, {5, ∅, ∅}}, {7, ∅, ∅}}, {15, {12, ∅, {13, ∅, ∅}}, {20, ∅, ∅}}}");	
-		assertEquals("13",TV1.getSubtreeWithPath("101").content.toString());
+				"{10, {6, {4, ∅, {5, ∅, ∅}}, {7, ∅, ∅}}, {15, {12, ∅, {13, ∅, ∅}}, {20, ∅, ∅}}}");
+		assertEquals("13", TV1.getSubtreeWithPath("101").content.toString());
+	}
+
+	@Test
+	public void testIsPathIn() {
+
+		TV1 = new BinarySearchTreeADTImpl<Integer>();
+		TV1.insert(10, 6, 7, 15, 4, 5, 20, 12, 13);
+
+		List<Integer> path = new ArrayList<Integer>();
+		path.add(10);
+		path.add(15);
+		path.add(12);
+		//{50 [(path, 1)], {30 [(path, 2)], {10 [(path, 3)], ∅, ∅}, {40, ∅, ∅}}, {80,
+			// {60, ∅, ∅}, ∅}}
+		assertEquals(true, TV1.isPathIn(path));
+		Assert.assertEquals(TV1.toString(),
+				"{10 [(path, 1)], {6, {4, ∅, {5, ∅, ∅}}, {7, ∅, ∅}}, {15 [(path, 2)], {12 [(path, 3)], ∅, {13, ∅, ∅}}, {20, ∅, ∅}}}");
+
+		path = new ArrayList<Integer>();
+		path.add(10);
+		path.add(30);
+		path.add(12);
+		assertEquals(false, TV1.isPathIn(path));
+		
+		path = new ArrayList<Integer>();
+		path.add(40);
+		path.add(30);
+		path.add(12);
+		assertEquals(false, TV1.isPathIn(path));
+
 	}
 
 }
