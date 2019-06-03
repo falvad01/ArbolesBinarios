@@ -161,7 +161,7 @@ public class BinarySearchTreeADTTests {
 		TC3 = new BinarySearchTreeADTImpl<Integer>();
 		TC3.insert(50, 20, 80, 10, 30, 70, 60);
 		Assert.assertEquals(TC3.toString(), "{50, {20, {10, ∅, ∅}, {30, ∅, ∅}}, {80, {70, {60, ∅, ∅}, ∅}, ∅}}");
-		TC3.withdraw(80);
+		TC3.withdraw(80); 
 		Assert.assertEquals(TC3.toString(), "{50, {20, {10, ∅, ∅}, {30, ∅, ∅}}, {70, {60, ∅, ∅}, ∅}}");
 
 		TC3 = new BinarySearchTreeADTImpl<Integer>();
@@ -289,5 +289,25 @@ public class BinarySearchTreeADTTests {
 		assertEquals(false, TV1.isPathIn(path));
 
 	}
+	
+	
+	@Test
+	public void testTagWidth() {
+		
+		
+		TC3 = new BinarySearchTreeADTImpl<Integer>();
+		TC3.insert(50, 20, 80, 10, 30, 70, 60);
+		TC3.tagWidth();
+		Assert.assertEquals(TC3.toString(), "{50 [(width, 1)], {20 [(width, 2)], {10 [(width, 3)], ∅, ∅}, {30 [(width, 3)], ∅, ∅}}, {80 [(width, 2)], {70 [(width, 3)], {60 [(width, 4)], ∅, ∅}, ∅}, ∅}}");
+		
+		T1234 = new BinarySearchTreeADTImpl<Integer>();
+		T1234.insert(1, 2, 3, 4);
+		T1234.tagWidth();
+		Assert.assertEquals(T1234.toString(), "{1 [(width, 1)], ∅, {2 [(width, 2)], ∅, {3 [(width, 3)], ∅, {4 [(width, 4)], ∅, ∅}}}}");
+		
+		
+	}
+	
+	
 
 }

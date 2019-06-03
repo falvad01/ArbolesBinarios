@@ -9,6 +9,8 @@ import java.util.Stack;
 
 import org.junit.internal.Throwables;
 
+import javafx.geometry.VPos;
+
 /**
  * Árbol binario de búsqueda (binary search tree, BST).
  * 
@@ -469,18 +471,24 @@ public class BinarySearchTreeADTImpl<T extends Comparable<? super T>> extends Ab
 
 			int count = 1;
 			this.setTag("path", 1);
+
 			BinarySearchTreeADTImpl<T> arbol = emptyBST();
 			arbol.content = this.content;
 			arbol.setLeftBST(this.getLeftBST());
 			arbol.setRightBST(this.getRightBST());
-			while (path.size() + 1 != count ) {
+
+			while (path.size() - 1 != count - 1) {
 
 				if (path.get(count) == arbol.getRightBST().content) {
-					arbol.setTag("path", count);
 					arbol = arbol.getRightBST();
+
+					arbol.setTag("path", count + 1);
+
 				} else if (path.get(count) == arbol.getLeftBST().content) {
-					arbol.setTag("path", count);
 					arbol = arbol.getLeftBST();
+
+					arbol.setTag("path", count + 1);
+
 				} else {
 					return false;
 
@@ -513,7 +521,30 @@ public class BinarySearchTreeADTImpl<T extends Comparable<? super T>> extends Ab
 	 * 
 	 */
 	public void tagWidth() {
-		// TODO Implementar método
+
+		BinarySearchTreeADTImpl<T> arbol = emptyBST();
+		arbol.content = this.content;
+		arbol.setLeftBST(this.getLeftBST());
+		arbol.setRightBST(this.getRightBST());
+		this.setTag("width", 1);
+		tagWidthRec(arbol, 1);
+
+	}
+
+	private void tagWidthRec(BinarySearchTreeADTImpl<T> arbol, int i) {
+
+		if (arbol.getLeftBST() != null) {
+
+			arbol.setTag("width", i);
+			tagWidthRec(arbol.getLeftBST(), i + 1);
+		}
+
+		if (arbol.getRightBST() != null) {
+
+			arbol.setTag("width", i);
+			tagWidthRec(arbol.getRightBST(), i + 1);
+		}
+
 	}
 
 	/**
