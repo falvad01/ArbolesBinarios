@@ -5,11 +5,9 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Stack;
+import java.util.concurrent.CountDownLatch;
 
 import org.junit.internal.Throwables;
-
-import javafx.geometry.VPos;
 
 /**
  * Árbol binario de búsqueda (binary search tree, BST).
@@ -433,21 +431,29 @@ public class BinarySearchTreeADTImpl<T extends Comparable<? super T>> extends Ab
 
 		if (this.getContent() != null) {
 
-			this.parentrecur(buffer, new int[1]);
+			this.parentRec(buffer, new int[1]);
 
 		}
 	}
 
-	private void parentrecur(List<String> buffer, int[] i) {
-		System.out.println(i[0]);
+	private void parentRec(List<String> buffer, int[] i) {
+
 		if (!this.isEmpty()) {
 
-			buffer.add(this.content.toString());
-
-			this.getRightBST().parentrecur(buffer, i);
+			this.getRightBST().parentRec(buffer, i);
 			i[0]++;
 			this.setTag("descend", i[0]);
-			this.getLeftBST().parentrecur(buffer, i);
+
+			if (!this.getRightBST().isEmpty()) { // Si no esta vacio por la derecha aniadimos elactual y su hijo
+
+				buffer.add("(" + this.content + ", " + this.getRightBST().content + ")");
+			}
+			if (!this.getLeftBST().isEmpty()) { // Lo mismso que la derecha pero por la izquierda
+				buffer.add("(" + this.content + ", " + this.getLeftBST().content + ")");
+
+			}
+
+			this.getLeftBST().parentRec(buffer, i);
 
 		}
 	}
@@ -581,8 +587,59 @@ public class BinarySearchTreeADTImpl<T extends Comparable<? super T>> extends Ab
 	 * @return iterador para el recorrido inorden o ascendente
 	 */
 	public Iterator<T> iteratorInorden() {
-		// TODO Implementar método
-		return null;
+
+		return new InordenIterator();
+	}
+
+	private class InordenIterator implements Iterator<T> {
+
+		int i;
+		List<BinarySearchTreeADTImpl<T>> coll;
+
+		public InordenIterator() {
+			i = 0;
+			BinarySearchTreeADTImpl<T> arbol = emptyBST();
+			arbol.content = getContent();
+			arbol.setLeftBST(getLeftBST());
+			arbol.setRightBST(getRightBST());
+			coll = new ArrayList<BinarySearchTreeADTImpl<T>>();
+			collecion(coll, arbol);
+		}
+
+		private void collecion(List<BinarySearchTreeADTImpl<T>> coll, BinarySearchTreeADTImpl<T> arbol) {
+
+			if (arbol.getLeftBST().content != null) {
+				collecion(coll, arbol.getLeftBST());
+			}
+
+			coll.add(arbol);
+			if (arbol.getRightBST().content != null) {
+				collecion(coll, arbol.getRightBST());
+
+			}
+		}
+
+		@Override
+		public boolean hasNext() {
+
+			if (i == coll.size()) {
+				return false;
+			} else {
+				return true;
+			}
+		}
+
+		@Override
+		public T next() {
+
+			if (!hasNext()) {
+				throw new NoSuchElementException();
+			}
+			i++;
+
+			return coll.get(i - 1).content;
+		}
+
 	}
 
 }

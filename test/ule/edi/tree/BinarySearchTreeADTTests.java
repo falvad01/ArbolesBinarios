@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -95,11 +96,11 @@ public class BinarySearchTreeADTTests {
 
 		List<String> lista = new LinkedList<String>();
 		TC3.parentChildPairsTagDescend(lista);
-		Assert.assertEquals(lista.toString(), "[(80, 90), (80, 70), (50, 80), (50, 20), (20, 30), (20, 10)]");
 		TC3.filterTags("descend");
 		Assert.assertEquals(
 				"{50 [(descend, 4)], {20 [(descend, 6)], {10 [(descend, 7)], ∅, ∅}, {30 [(descend, 5)], ∅, ∅}}, {80 [(descend, 2)], {70 [(descend, 3)], ∅, ∅}, {90 [(descend, 1)], ∅, ∅}}}",
 				TC3.toString());
+		Assert.assertEquals(lista.toString(), "[(80, 90), (80, 70), (50, 80), (50, 20), (20, 30), (20, 10)]");
 
 	}
 
@@ -161,7 +162,7 @@ public class BinarySearchTreeADTTests {
 		TC3 = new BinarySearchTreeADTImpl<Integer>();
 		TC3.insert(50, 20, 80, 10, 30, 70, 60);
 		Assert.assertEquals(TC3.toString(), "{50, {20, {10, ∅, ∅}, {30, ∅, ∅}}, {80, {70, {60, ∅, ∅}, ∅}, ∅}}");
-		TC3.withdraw(80); 
+		TC3.withdraw(80);
 		Assert.assertEquals(TC3.toString(), "{50, {20, {10, ∅, ∅}, {30, ∅, ∅}}, {70, {60, ∅, ∅}, ∅}}");
 
 		TC3 = new BinarySearchTreeADTImpl<Integer>();
@@ -184,6 +185,8 @@ public class BinarySearchTreeADTTests {
 		Assert.assertEquals(TV1.toString(), "{10, {6, {4, ∅, {5, ∅, ∅}}, {7, ∅, ∅}}, {13, {12, ∅, ∅}, {20, ∅, ∅}}}");
 
 	}
+	
+	
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testWithdrowNull() {
@@ -270,8 +273,8 @@ public class BinarySearchTreeADTTests {
 		path.add(10);
 		path.add(15);
 		path.add(12);
-		//{50 [(path, 1)], {30 [(path, 2)], {10 [(path, 3)], ∅, ∅}, {40, ∅, ∅}}, {80,
-			// {60, ∅, ∅}, ∅}}
+		// {50 [(path, 1)], {30 [(path, 2)], {10 [(path, 3)], ∅, ∅}, {40, ∅, ∅}}, {80,
+		// {60, ∅, ∅}, ∅}}
 		assertEquals(true, TV1.isPathIn(path));
 		Assert.assertEquals(TV1.toString(),
 				"{10 [(path, 1)], {6, {4, ∅, {5, ∅, ∅}}, {7, ∅, ∅}}, {15 [(path, 2)], {12 [(path, 3)], ∅, {13, ∅, ∅}}, {20, ∅, ∅}}}");
@@ -281,7 +284,7 @@ public class BinarySearchTreeADTTests {
 		path.add(30);
 		path.add(12);
 		assertEquals(false, TV1.isPathIn(path));
-		
+
 		path = new ArrayList<Integer>();
 		path.add(40);
 		path.add(30);
@@ -289,25 +292,37 @@ public class BinarySearchTreeADTTests {
 		assertEquals(false, TV1.isPathIn(path));
 
 	}
-	
-	
+
 	@Test
 	public void testTagWidth() {
-		
-		
+
 		TC3 = new BinarySearchTreeADTImpl<Integer>();
 		TC3.insert(50, 20, 80, 10, 30, 70, 60);
 		TC3.tagWidth();
-		Assert.assertEquals(TC3.toString(), "{50 [(width, 1)], {20 [(width, 2)], {10 [(width, 3)], ∅, ∅}, {30 [(width, 3)], ∅, ∅}}, {80 [(width, 2)], {70 [(width, 3)], {60 [(width, 4)], ∅, ∅}, ∅}, ∅}}");
-		
+		Assert.assertEquals(TC3.toString(),
+				"{50 [(width, 1)], {20 [(width, 2)], {10 [(width, 3)], ∅, ∅}, {30 [(width, 3)], ∅, ∅}}, {80 [(width, 2)], {70 [(width, 3)], {60 [(width, 4)], ∅, ∅}, ∅}, ∅}}");
+
 		T1234 = new BinarySearchTreeADTImpl<Integer>();
 		T1234.insert(1, 2, 3, 4);
 		T1234.tagWidth();
-		Assert.assertEquals(T1234.toString(), "{1 [(width, 1)], ∅, {2 [(width, 2)], ∅, {3 [(width, 3)], ∅, {4 [(width, 4)], ∅, ∅}}}}");
-		
-		
+		Assert.assertEquals(T1234.toString(),
+				"{1 [(width, 1)], ∅, {2 [(width, 2)], ∅, {3 [(width, 3)], ∅, {4 [(width, 4)], ∅, ∅}}}}");
+
 	}
 	
-	
+	@Test
+	public <T> void testIterator() {
+		TC3 = new BinarySearchTreeADTImpl<Integer>();
+		TC3.insert(50, 20, 80, 10, 30, 70, 60);
+		Iterator<T> it =  (Iterator<T>) TC3.iteratorInorden();
+		
+		assertEquals(10, it.next());
+		assertEquals(20, it.next());
+		assertEquals(30, it.next());
+		assertEquals(50, it.next());
+		assertEquals(60, it.next());
+		assertEquals(70, it.next());
+		assertEquals(80, it.next());
+	}
 
 }
