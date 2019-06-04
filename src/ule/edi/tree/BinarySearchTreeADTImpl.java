@@ -5,9 +5,6 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.concurrent.CountDownLatch;
-
-import org.junit.internal.Throwables;
 
 /**
  * Árbol binario de búsqueda (binary search tree, BST).
@@ -605,7 +602,11 @@ public class BinarySearchTreeADTImpl<T extends Comparable<? super T>> extends Ab
 			coll = new ArrayList<BinarySearchTreeADTImpl<T>>();
 			collecion(coll, arbol);
 		}
-
+		/**
+		 * Metemos los hojas del arbol en inorden a una colecion para devolverla con next
+		 * @param coll
+		 * @param arbol
+		 */
 		private void collecion(List<BinarySearchTreeADTImpl<T>> coll, BinarySearchTreeADTImpl<T> arbol) {
 
 			if (arbol.getLeftBST().content != null) {
@@ -639,7 +640,5 @@ public class BinarySearchTreeADTImpl<T extends Comparable<? super T>> extends Ab
 
 			return coll.get(i - 1).content;
 		}
-
 	}
-
 }

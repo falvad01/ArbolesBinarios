@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -324,5 +325,23 @@ public class BinarySearchTreeADTTests {
 		assertEquals(70, it.next());
 		assertEquals(80, it.next());
 	}
+	
+	@Test (expected = NoSuchElementException.class)
+	public <T> void testIteratorNoElem() {
+		TC3 = new BinarySearchTreeADTImpl<Integer>();
+		TC3.insert(50, 20, 80, 10, 30, 70, 60);
+		Iterator<T> it =  (Iterator<T>) TC3.iteratorInorden();
+		
+		assertEquals(10, it.next());
+		assertEquals(20, it.next());
+		assertEquals(30, it.next());
+		assertEquals(50, it.next());
+		assertEquals(60, it.next());
+		assertEquals(70, it.next());
+		assertEquals(80, it.next());
+		assertEquals(80, it.next());
+	}
+	
+	
 
 }
